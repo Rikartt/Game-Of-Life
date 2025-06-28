@@ -21,9 +21,20 @@ def CheckGrid(grid):
                          [i, j+1], [i, j-1],
                          [i-1, j+1], [i-1, j], [i-1, j-1]]
             for x in neighbors:
-                if 0 <= x[0] <= len(grid)-1 and len(grid[0])-1 >= x[1] >= 0:
-                    if grid[x[0]][x[1]]:
-                        liveneighborcount += 1
+                #if 0 <= x[0] <= len(grid)-1 and len(grid[0])-1 >= x[1] >= 0: #Border handling without flowover. Flowover = That the game board wraps
+                #    if grid[x[0]][x[1]]:
+                #        liveneighborcount += 1
+                if 0 > x[0]:
+                    x[0] = len(grid)-1
+                if x[0] > len(grid)-1:
+                    x[0] = 0
+                if x[1] < 0:
+                    x[1] = len(grid[0])-1
+                if x[1] > len(grid[0])-1:
+                    x[1] = 0
+                if grid[x[0]][x[1]]:
+                    liveneighborcount += 1
+
             #print("Live neighbor count", liveneighborcount)
             if liveneighborcount < 2:
                 retgrid[i][j] = False
