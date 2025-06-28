@@ -32,7 +32,7 @@ def HandleClick(grid, windowheight, windowwidth, x, y):
     clickedblockX = int(x // blockwidth)
     clickedblockY = int(y // blockheight)
     print(clickedblockX, " ", clickedblockY)
-    #Change this tile to active
+    #Toggle this tile
     grid[clickedblockX][clickedblockY] = not grid[clickedblockX][clickedblockY]
     return grid
 
@@ -51,13 +51,13 @@ while running:
             pos = pygame.mouse.get_pos()
             maingrid = HandleClick(maingrid, WINDOWHEIGHT, WINDOWWIDTH, pos[0], pos[1])
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
+            if event.key == pygame.K_SPACE: #Toggle the pause
                 paused = not paused
                 #print("Pause!")
 
     # Game logic updates here
     if not paused:
-        maingrid = CheckGrid(maingrid)
+        maingrid = CheckGrid(maingrid) #Update the grid if it's not paused
     screen.fill((0, 0, 0))  # Clear screen with black
 
     # Drawing code here
