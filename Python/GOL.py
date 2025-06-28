@@ -1,4 +1,5 @@
 import os
+import multiprocessing
 import copy
 import sys
 import time
@@ -57,17 +58,14 @@ def TextAnimateFrame(grid):
     os.system('cls' if os.name == 'nt' else 'clear')
     return grid
 
-def PygameAnimateFrame(grid):
-    pass
-
 maingrid = createEmptyGrid(20, 20)
 
-maingrid[1][2] = True
-maingrid[2][3] = True
-maingrid[3][1] = True
-maingrid[3][2] = True
-maingrid[3][3] = True
+#maingrid[1][2] = True
+#maingrid[2][3] = True
+#maingrid[3][1] = True
+#maingrid[3][2] = True
+#maingrid[3][3] = True
 #pygame.init()
-for i in range(100):
-    sys.stdout.write("gen: " + str(i) + '\n')
-    maingrid = TextAnimateFrame(maingrid)
+#for i in range(100): #Text render Game Of Life
+    #sys.stdout.write("gen: " + str(i) + '\n')
+    #maingrid = TextAnimateFrame(maingrid)
