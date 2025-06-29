@@ -1,4 +1,4 @@
-from GOL import createEmptyGrid, CheckGrid
+from GOL import createEmptyGrid, CheckGrid, RandomizeGrid
 import pygame
 import sys
 GRIDWIDTH = 100
@@ -15,8 +15,8 @@ maingrid[3][2] = True
 maingrid[3][3] = True
 pygame.init()
 def PGRenderGrid(grid, windowheight, windowwidth, offcolor, oncolor):
-    blockwidth = windowwidth / len(grid) #height and width of one block are defined
-    blockheight = windowheight / len(grid[0])
+    blockwidth = windowwidth / len(grid[0]) #height and width of one block are defined
+    blockheight = windowheight / len(grid)
     #Draw the grid
     for i in range(len(grid)):
         for j in range(len(grid[i])):
@@ -37,10 +37,12 @@ def HandleClick(grid, windowheight, windowwidth, x, y):
     return grid
 
 screen = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+CurrentGen = 0
 pygame.display.set_caption("Conway's Game Of Life")
 
 clock = pygame.time.Clock()
-
+FrameRate = 15
+FrameStep = 5
 running = True
 paused = False
 while running:
@@ -54,10 +56,21 @@ while running:
             if event.key == pygame.K_SPACE: #Toggle the pause
                 paused = not paused
                 #print("Pause!")
+            if event.key == pygame.K_r: #randomize grid
+                maingrid = RandomizeGrid(maingrid)
+            if event.key == pygame.K_c: #clear screen
+                maingrid = createEmptyGrid(len(maingrid), len(maingrid[0]))
+                CurrentGen = 0
+            if event.key == pygame.K_UP:
+                FrameRate += FrameStep
+            if event.key == pygame.K_DOWN:
+                FrameRate -= FrameStep
 
     # Game logic updates here
+    pygame.display.set_caption(f"Conway's Game Of Life {CurrentGen}th Generation and running at {FrameRate} FPS")
     if not paused:
         maingrid = CheckGrid(maingrid) #Update the grid if it's not paused
+        CurrentGen += 1
     screen.fill((0, 0, 0))  # Clear screen with black
 
     # Drawing code here
@@ -65,7 +78,7 @@ while running:
 
     pygame.display.flip()  # Update the display
 
-    clock.tick(10)  # Limit to 60 FPS
+    clock.tick(FrameRate)  # Limit to FrameRate FPS
 
 pygame.quit()
 sys.exit()

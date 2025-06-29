@@ -3,6 +3,7 @@ import multiprocessing
 import copy
 import sys
 import time
+import random
 #import pygame
 
 #SCREEN_WIDTH = 500
@@ -13,7 +14,7 @@ def createEmptyGrid(width, height):
     return grid
 print(createEmptyGrid(10, 10))
 def CheckGrid(grid):
-    retgrid = copy.deepcopy(grid)
+    retgrid = createEmptyGrid(len(grid), len(grid[0]))
     for i in range(len(grid)):
         for j in range(len(grid[i])):
             liveneighborcount = 0
@@ -24,14 +25,16 @@ def CheckGrid(grid):
                 #if 0 <= x[0] <= len(grid)-1 and len(grid[0])-1 >= x[1] >= 0: #Border handling without flowover. Flowover = That the game board wraps
                 #    if grid[x[0]][x[1]]:
                 #        liveneighborcount += 1
-                if 0 > x[0]:
-                    x[0] = len(grid)-1
-                if x[0] > len(grid)-1:
-                    x[0] = 0
-                if x[1] < 0:
-                    x[1] = len(grid[0])-1
-                if x[1] > len(grid[0])-1:
-                    x[1] = 0
+                #if 0 > x[0]:
+                #    x[0] = len(grid)-1
+                #if x[0] > len(grid)-1:
+                #    x[0] = 0
+                #if x[1] < 0:
+                #    x[1] = len(grid[0])-1
+                #if x[1] > len(grid[0])-1:
+                #    x[1] = 0
+                x[0] %= len(grid)-1
+                x[1] %= len(grid[0])-1
                 if grid[x[0]][x[1]]:
                     liveneighborcount += 1
 
@@ -67,6 +70,12 @@ def TextAnimateFrame(grid):
     time.sleep(0.5)
     sys.stdout.flush()
     os.system('cls' if os.name == 'nt' else 'clear')
+    return grid
+
+def RandomizeGrid(grid):
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            grid[i][j] = bool(random.getrandbits(1))
     return grid
 
 maingrid = createEmptyGrid(20, 20)
