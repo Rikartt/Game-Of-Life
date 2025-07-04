@@ -1,6 +1,13 @@
 function createEmptyGrid (width, height) {
     return Array(width).fill().map(() => Array(height).fill(false));
 }
+let paused = false
+document.addEventListener('keydown', function(event) {
+        if (event.key == "p") {
+            paused = !paused;
+            console.log("paused!")
+        }
+    });
 //console.log(createEmptyGrid(10, 11))
 function CheckGrid (grid) {
     let retgrid = createEmptyGrid (grid.length, grid[0].length)
@@ -31,6 +38,15 @@ function CheckGrid (grid) {
     return retgrid
 }
 
+function HandleClick(grid, canvaswidth, canvasheight, x, y) {
+    let tilewidth = canvaswidth / grid.length
+    let tileheight = canvasheight / grid[0].length
+    let tileX = Math.floor(x/tilewidth) - 1
+    let tileY = Math.floor(y/tileheight) - 1
+    grid[tileX][tileY] = !grid[tileX][tileY]
+    console.log(tileX, tileY)
+}
+
 function RandomizeGrid (grid) {
     for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[0].length; j++) {
@@ -45,16 +61,23 @@ function RenderGrid(grid, elementid) {
     var ctx = c.getContext("2d");
     var dwidth = c.width; var dheight = c.height; //Screen width and height
     var tilewidth = dwidth / grid.length; var tileheight = dheight / grid[0].length; // Tile height and width
-    for (let i = 0; i < grid.length; i++) {
-        for (let j = 0; j < grid[0].length; j++) {
-            if (grid[i][j]) {
-                ctx.fillStyle = "white";
-            } else {
-                ctx.fillStyle = "black";
+        for (let i = 0; i < grid.length; i++) {
+            for (let j = 0; j < grid[0].length; j++) {
+                if (grid[i][j]) {
+                    ctx.fillStyle = "white";
+                } else {
+                    ctx.fillStyle = "black";
+                }
+                ctx.fillRect(i*tilewidth, j*tileheight, tilewidth, tileheight);
             }
-            ctx.fillRect(i*tilewidth, j*tileheight, tilewidth, tileheight);
         }
-    }
+    c.addEventListener('click', (e) => {
+        const pos = {
+            x: e.clientX,
+            y: e.clientY
+        };
+        HandleClick(maingrid, dwidth, dheight, pos.x, pos.y)
+    });
 }
 
 let desiredFPS = 30;
@@ -69,7 +92,7 @@ function mainloop(currentTime, grid) {
         lastTime = currentTime;
 
         RenderGrid(maingrid, "maincanvas");
-        maingrid = CheckGrid(maingrid);
+        if (!paused) {maingrid = CheckGrid(maingrid);}
     }
 
     requestAnimationFrame(mainloop);
