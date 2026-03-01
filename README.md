@@ -13,10 +13,13 @@ This file is in turn dependent on the separate GOL.py file, defining the basic g
 
 The plan is to use JS canvas to make the game of life. Should be easy as we just have to code the same functions as the python used.
 
+# C
+Game of Life logic and text based version finished but still have to make a nice GUI etc.
+
 # Roadmap
 
 - [X] Python
-- [ ] Javascript/WebGL
+- [X] Javascript/WebGL
 - [ ] C
 - [ ] C++
 - [ ] Rust

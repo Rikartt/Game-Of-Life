@@ -101,7 +101,7 @@ function mainloop(currentTime, grid) {
 
 
 
-let maingrid = RandomizeGrid(createEmptyGrid(300, 300));
+let maingrid = RandomizeGrid(createEmptyGrid(100, 100));
 
 maingrid[1][2] = true
 maingrid[2][3] = true
