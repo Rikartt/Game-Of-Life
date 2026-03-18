@@ -121,6 +121,15 @@ int main(void) {
             int gridY = floor(mouseWorldPos.y/sqHeight);
             togglesquare(grid, gridX, gridY);
         }
+        if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) { //Panning
+            Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), camera);
+            camx = mouseWorldPos.x-screenWidth/camera.zoom/2; camy = mouseWorldPos.y-screenHeight/camera.zoom/2;
+        }
+        if (GetMouseWheelMove()!=0) {
+            Vector2 mouseWorldPos = GetScreenToWorld2D(GetMousePosition(), camera);
+            camera.zoom = expf(logf(camera.zoom) + ((float)GetMouseWheelMove()*0.1f));
+            camx = mouseWorldPos.x-screenWidth/camera.zoom/2; camy = mouseWorldPos.y-screenHeight/camera.zoom/2;
+        }
         if (camx<0) {camx=0;} if (camy<0) {camy=0;} 
         if (camx+screenWidth/camera.zoom > screenWidth) {camx = screenWidth*(1-1/camera.zoom);} 
         if (camy+screenHeight/camera.zoom > screenWidth) {camy = screenHeight*(1-1/camera.zoom);}
@@ -132,7 +141,6 @@ int main(void) {
             updategrid(grid);
             gencount++;
         }
-        camera.zoom = expf(logf(camera.zoom) + ((float)GetMouseWheelMove()*0.1f));
         camera.target = (Vector2){ camx, camy };
 
         // Draw
