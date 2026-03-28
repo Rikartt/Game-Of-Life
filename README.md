@@ -21,7 +21,8 @@ Windows: x86_64-w64-mingw32-gcc raylibGOL.c -o life.exe \
   -I/usr/x86_64-w64-mingw32/include \
   -L/usr/x86_64-w64-mingw32/lib \
   -lraylib -lopengl32 -lgdi32 -lwinmm -lm -mwindows
-Archlinux 
+Archlinux: gcc raylibGOL.c -o life $(pkg-config --cflags --libs raylib) -lm
+./life
 
 # Roadmap
 
