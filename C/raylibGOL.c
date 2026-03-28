@@ -132,7 +132,7 @@ int main(void) {
         }
         if (camx<0) {camx=0;} if (camy<0) {camy=0;} 
         if (camx+screenWidth/camera.zoom > screenWidth) {camx = screenWidth*(1-1/camera.zoom);} 
-        if (camy+screenHeight/camera.zoom > screenWidth) {camy = screenHeight*(1-1/camera.zoom);}
+        if (camy+screenHeight/camera.zoom > screenHeight) {camy = screenHeight*(1-1/camera.zoom);}
         // Update
         //----------------------------------------------------------------------------------
         // TODO: Update your variables here

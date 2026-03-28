@@ -14,13 +14,20 @@ This file is in turn dependent on the separate GOL.py file, defining the basic g
 The plan is to use JS canvas to make the game of life. Should be easy as we just have to code the same functions as the python used.
 
 # C
-Game of Life logic and text based version finished but still have to make a nice GUI etc.
+  - [X] Game of Life logic and text based version finished but still have to make a nice GUI etc.
+  - [X] Raylib GUI version of the Game Of Life finished! C Part of this project is finished!
+Compile:
+Windows: x86_64-w64-mingw32-gcc raylibGOL.c -o life.exe \
+  -I/usr/x86_64-w64-mingw32/include \
+  -L/usr/x86_64-w64-mingw32/lib \
+  -lraylib -lopengl32 -lgdi32 -lwinmm -lm -mwindows
+Archlinux 
 
 # Roadmap
 
 - [X] Python
 - [X] Javascript/WebGL
-- [ ] C
+- [X] C
 - [ ] C++
 - [ ] Rust
 - [ ] Golang
